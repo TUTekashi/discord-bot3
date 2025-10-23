@@ -268,7 +268,24 @@ setInterval(
 
 client.once("clientReady", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
-  console.log(`📋 Commands loaded: ${client.commands.size}`);
+
+  const activities = [
+    { name: "/setlanguage", type: 3 }, // 👀 Watching /setlanguage
+    { name: "🌍 Translating messages", type: 0 }, // 🎮 Playing
+    { name: "Helping users communicate", type: 0 },
+  ];
+
+  let i = 0;
+  client.user.setActivity(activities[i]);
+  client.user.setStatus("online");
+
+  // ⏳ Change status every 10 minutes
+  setInterval(() => {
+    i = (i + 1) % activities.length;
+    client.user.setActivity(activities[i]);
+  }, 10 * 60 * 1000);
+
+  console.log("📋 Commands loaded: 3");
 });
 
 client.login(process.env.DISCORD_TOKEN);
